@@ -154,64 +154,79 @@ def axisSetting(df, fig_type, ax1, ax2, second_axis, fig_list_xlabel, fig_list_y
         col1, col2 = st.columns(2)
     with col1 :
         st.write("x軸")
-        if df[fig_list_xlabel[0]].max() % 5 == 0 :
-            x_max = df[fig_list_xlabel[0]].max()
-        else :
-            x_max = math.ceil(df[fig_list_xlabel[0]].max())
-        st.write('input: ', x_max)
-        if df[fig_list_xlabel[0]].min() % 5 == 0 :
-            x_min = df[fig_list_xlabel[0]].min()
-        else :
-            x_min = math.floor(df[fig_list_xlabel[0]].min())
-        st.write('input: ', x_min)
+        st.write('x_max: ', df[fig_list_xlabel[0]].max())
+        x_max = st.number_input("x軸の最大値")
+        st.write('x_min: ', df[fig_list_xlabel[0]].min())
+        x_min = st.number_input("x軸の最小値")
         if fig_type == 0:
-            x_step = float(st.number_input("x軸の刻み幅"))
-            # plt.xticks(np.arange(start, stop, step))
+            x_num_step = int(st.number_input("x軸の刻み数", value=5))
             try :
-                ax1.set_xticks(np.arange(stop=x_max, step=x_step, dtype=float))
+                # plt.xticks(np.arange(x_min, x_max, x_step))
+                x_step = (x_max - x_min) / x_num_step
+                ax1.set_xticks(np.arange(start=x_min, stop=x_max+x_max*1e-15, step=x_step, dtype=float))
             except :
-                inputNumberErr(x_step)
+                inputNumberErr(x_num_step)
     ax1.set_xlim(x_min, x_max)     # 原点ゼロ合わせ
     ax1.get_xaxis().set_tick_params(pad=8)    # 目盛と軸の間隔
     if second_axis:
         with col2 :
             st.write("第1y軸")
-            y1_max = df[fig_list_ylabel[0]].max()
-            st.write('input: ', y1_max)
-            y1_min = df[fig_list_ylabel[0]].min()
-            st.write('input: ', y1_min)
-            y1_step = float(st.number_input("y1軸の刻み幅"))
+            st.write('y1_max: ', df[fig_list_ylabel[0]].max())
+            y1_max = st.number_input("y1軸の最大値")
+            st.write('y1_min: ', df[fig_list_ylabel[0]].min())
+            y1_min = st.number_input("y1軸の最小値")
+ 
+            y1_num_step = int(st.number_input("y1軸の刻み数", value=5))
+
             try :
-                ax1.set_yticks(np.arange(stop=y1_max, step=y1_step, dtype=float))
+                y1_step = (y1_max - y1_min) / y1_num_step
+                ax1.set_yticks(np.arange(start=y1_min, stop=y1_max+y1_max*1e-15, step=y1_step, dtype=float))
             except :
-                inputNumberErr(y1_step)
+                inputNumberErr(y1_num_step)
             ax1.set_ylim(y1_min, y1_max)     # 原点ゼロ合わせ
         with col3 :
             st.write("第2y軸")
-            y2_max = df[fig_list_ylabel[1]].max()
-            st.write('input: ', y2_max)
-            y2_min = df[fig_list_ylabel[1]].min()
-            st.write('input: ', y2_min)
-            y2_step = float(st.number_input("y2軸の刻み幅"))
+
+            # y2_max = df[fig_list_ylabel[1]].max()
+            # st.write('input: ', y2_max)
+            # y2_min = df[fig_list_ylabel[1]].min()
+            # st.write('input: ', y2_min)
+            
+            st.write('y2_max: ', df[fig_list_ylabel[1]].max())
+            y2_max = st.number_input("y2軸の最大値")
+            st.write('y2_min: ', df[fig_list_ylabel[1]].min())
+            y2_min = st.number_input("y2軸の最小値")
+ 
+            y2_num_step = int(st.number_input("y2軸の刻み数", value=5))
+
             try :
-                ax2.set_yticks(np.arange(stop=y2_max, step=y2_step, dtype=float))
+                y2_step = (y2_max - y2_min) / y2_num_step
+                ax2.set_yticks(np.arange(start=y2_min, stop=y2_max+y2_max*1e-15, step=y2_step, dtype=float))
             except :
-                inputNumberErr(y2_step)
+                inputNumberErr(y2_num_step)
             ax2.set_ylim(y2_min, y2_max)     # 原点ゼロ合わせ
         ax1.get_yaxis().set_tick_params(pad=8)    # 目盛と軸の間隔
         ax2.get_yaxis().set_tick_params(pad=8)    # 目盛と軸の間隔
     else :
         with col2 :
             st.write("y軸")
-            y_max = df[fig_list_ylabel[0]].max()
-            st.write('input: ', y_max)
-            y_min = df[fig_list_ylabel[0]].min()
-            st.write('input: ', y_min)
-            y_step = float(st.number_input("y軸の刻み幅"))
+            # y_max = df[fig_list_ylabel[0]].max()
+            # st.write('input: ', y_max)
+            # y_min = df[fig_list_ylabel[0]].min()
+            # st.write('input: ', y_min)
+
+            st.write('y_max: ', df[fig_list_ylabel[0]].max())
+            y_max = st.number_input("y軸の最大値")
+            st.write('y_min: ', df[fig_list_ylabel[0]].min())
+            y_min = st.number_input("y軸の最小値")
+ 
+            y_num_step = int(st.number_input("y軸の刻み数", value=5))
+            
             try :
-                ax1.set_yticks(np.arange(stop=y_max, step=y_step, dtype=float))
+                y_step = (y_max - y_min) / y_num_step
+                ax1.set_yticks(np.arange(start=y_min, stop=y_max+y_max*1e-15, step=y_step, dtype=float))
             except :
-                inputNumberErr(y_step)
+                inputNumberErr(y_num_step)
             ax1.set_ylim(y_min, y_max)     # 原点ゼロ合わせ
             ax1.get_yaxis().set_tick_params(pad=8)    # 目盛と軸の間隔
 
